@@ -16,5 +16,9 @@ public interface PlanningDao {
     
         
  public  ArrayList<Planning> selectPlanning() throws DaoException;
+ 
+ public ArrayList<Planning> selectPlanningParEmp(int emp) throws DaoException;
+ 
+ public ArrayList<Planning> selectPlanningParProj(int proj) throws DaoException;
     
 }

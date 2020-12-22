@@ -5,11 +5,15 @@
  */
 package presentation;
 
+import bean.Employé;
+import bean.Planning;
+import bean.Projet;
 import dao.DaoFactory;
+import dao.EmployeDao;
 import dao.PlanningDao;
-import daoMysql.PlanningDaoMysql;
+import dao.ProjetDao;
+import java.util.ArrayList;
 import javax.swing.JTable;
-
 
 /**
  *
@@ -17,13 +21,16 @@ import javax.swing.JTable;
  */
 public class JIFPlanning extends javax.swing.JInternalFrame {
 
-   private DaoFactory factory = DaoFactory.getInstance();
- private PlanningDao daoPlan = new PlanningDaoMysql(factory);
- private TableModelPlanning myPlanModel = new TableModelPlanning(daoPlan.selectPlanning());
-    
-    
+    private DaoFactory factory = DaoFactory.getInstance();
+    private PlanningDao daoPlan = factory.getPlanningDao();
+    private EmployeDao employeDao = factory.getEmployeDao();
+    private ProjetDao projetDao = factory.getProjetDao();
+    private TableModelPlanning myPlanModel = new TableModelPlanning(daoPlan.selectPlanning());
+
     public JIFPlanning() {
         initComponents();
+        fillComponents();
+     //   projComponents();
     }
 
     /**
@@ -38,30 +45,76 @@ public class JIFPlanning extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
 
         jTable1 = new JTable(myPlanModel);
+        jComboEmp = new javax.swing.JComboBox();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Planning"));
         setVisible(true);
 
-        jTable1.setBorder(javax.swing.BorderFactory.createTitledBorder("Planning"));
+        jTable1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jScrollPane1.setViewportView(jTable1);
+
+        jComboEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboEmpActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jComboEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jComboEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jComboEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboEmpActionPerformed
+//        Employé seleEmployé = (Employé) jComboEmp.getSelectedItem();
+//        ArrayList<Planning> listePlannings = daoPlan.selectPlanningParEmp(seleEmployé.getIdEmployé());
+//        myPlanModel.setMyList(listePlannings);
+  Projet seleProjet = (Projet) jComboEmp.getSelectedItem();
+        ArrayList<Planning> listePlannings = daoPlan.selectPlanningParProj(seleProjet.getIdProjet());
+        myPlanModel.setMyList(listePlannings);
+
+    }//GEN-LAST:event_jComboEmpActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox jComboEmp;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-}
+
+    private void fillComponents() {
+          ArrayList<Projet> listeProjet = projetDao.selectProjets();
+        listeProjet.add(0, new Projet(-1, "*"));
+        for (Projet pro : listeProjet) {
+            jComboEmp.addItem(pro);
+        }
+    }
+
+//    private void projComponents() {
+//        ArrayList<Projet> listeProjet = projetDao.selectProjets();
+//        listeProjet.add(0, new Projet(-1, "*"));
+//        for (Projet pro : listeProjet) {
+//            jComboEmp.addItem(pro);
+//        }
+    }
+
+

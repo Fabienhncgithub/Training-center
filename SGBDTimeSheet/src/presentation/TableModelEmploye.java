@@ -5,19 +5,19 @@
  */
 package presentation;
 
-import bean.Planning;
+import bean.Employé;
 import java.util.ArrayList;
 
 /**
  *
  * @author Fabien
  */
-public class TableModelPlanning extends javax.swing.table.AbstractTableModel {
+public class TableModelEmploye extends javax.swing.table.AbstractTableModel {
 
-    private String[] columnNames = {"Projet", "Heure", "Date","Employé","Ville"};
-    private ArrayList<Planning> myList;
+    private String[] columnNames = {"Nom", "Prenom", "Adresse", "Email", "Ville","Code postal"};
+    private ArrayList<Employé> myList;
 
-    public TableModelPlanning(ArrayList myList) {
+    public TableModelEmploye(ArrayList myList) {
         this.myList = myList;
     }
 
@@ -38,18 +38,20 @@ public class TableModelPlanning extends javax.swing.table.AbstractTableModel {
 
     @Override
     public Object getValueAt(int row, int col) {
-        Planning myPlan = myList.get(row);
+        Employé myPlan = myList.get(row);
         switch (col) {
             case 0:
-                return myPlan.getProjet().getNomProjet();
+                return myPlan.getNom();
             case 1:
-             return myPlan.getNbHeures();
+                return myPlan.getPrénom();
             case 2:
-             return myPlan.getJour().getDate();
+                return myPlan.getAdresse();
             case 3:
-             return myPlan.getEmployé().getNom();
+                return myPlan.getEmail();
             case 4:
-                  return myPlan.getEmployé().getVille().getCommune();
+                return myPlan.getVille().getCommune();
+            case 5:
+                return myPlan.getVille().getCp();
         }
         return null;
     }
@@ -69,19 +71,9 @@ public class TableModelPlanning extends javax.swing.table.AbstractTableModel {
                 return String.class;
             case 4:
                 return String.class;
+            case 5:
+                return String.class;
         }
         return null;
     }
-
-    public ArrayList<Planning> getMyList() {
-        return myList;
-    }
-
-    public void setMyList(ArrayList<Planning> myList) {
-        this.myList = myList;
-        this.fireTableDataChanged();
-    }
-    
-    
-    
 }

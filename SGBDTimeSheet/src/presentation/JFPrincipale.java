@@ -86,6 +86,11 @@ public class JFPrincipale extends javax.swing.JFrame {
         jMenu2.add(jMenuVille);
 
         jMenuItem6.setText("Employé");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
@@ -121,6 +126,18 @@ public class JFPrincipale extends javax.swing.JFrame {
         }
         jDesktopPane1.repaint();
     }//GEN-LAST:event_jMenuPlanningActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+              jDesktopPane1.removeAll();
+       JIFEmployé f = new JIFEmployé();
+       jDesktopPane1.add(f);
+        try {
+            f.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(JFPrincipale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        jDesktopPane1.repaint();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments

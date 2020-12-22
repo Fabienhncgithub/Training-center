@@ -40,6 +40,11 @@ public class Projet {
     public void setListePlanning(List<Planning> listePlanning) {
         this.listePlanning = listePlanning;
     }
+
+    @Override
+    public String toString() {
+        return nomProjet;
+    }
     
     
     

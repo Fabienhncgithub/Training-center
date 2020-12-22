@@ -26,9 +26,19 @@ public class Employé {
         this.ville = ville;
     }
 
+    public Employé(int idEmployé, String nom) {
+        this.idEmployé = idEmployé;
+        this.nom = nom;
+    }
+    
+    
+
     public int getIdEmployé() {
         return idEmployé;
     }
+    
+    
+    
 
     public void setIdEmployé(int idEmployé) {
         this.idEmployé = idEmployé;
@@ -74,6 +84,13 @@ public class Employé {
         this.ville = ville;
     }
 
+    @Override
+    public String toString() {
+        return nom;
+    }
+
+    
+   
 
     
 }
