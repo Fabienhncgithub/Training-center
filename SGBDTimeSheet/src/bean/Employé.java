@@ -30,6 +30,9 @@ public class Employé {
         this.idEmployé = idEmployé;
         this.nom = nom;
     }
+
+    public Employé() {
+    }
     
     
 

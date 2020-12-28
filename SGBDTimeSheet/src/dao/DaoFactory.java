@@ -22,7 +22,9 @@ public class DaoFactory {
     private static final String PROPERTY_MOT_DE_PASSE = "motdepasse";
     private static final String PROPERT_PLAN_DAO = "planningdao";
     private static final String PROPERT_EMP_DAO = "employedao";
-        private static final String PROPERT_PRO_DAO = "projetdao";
+    private static final String PROPERT_PRO_DAO = "projetdao";
+    private static final String PROPERT_JOU_DAO = "jourdao";
+    private static final String PROPERT_VIL_DAO = "villedao";
 
     private String url;
     private String driver;
@@ -31,6 +33,8 @@ public class DaoFactory {
     private String planDao;
     private String empDao;
     private String proDao;
+    private String jouDao;
+    private String vilDao;
 
     /* Pattern Singleton */
     private static DaoFactory uniqueInstance = new DaoFactory();
@@ -56,8 +60,10 @@ public class DaoFactory {
             username = properties.getProperty(PROPERTY_NOM_UTILISATEUR);
             password = properties.getProperty(PROPERTY_MOT_DE_PASSE);
             planDao = properties.getProperty(PROPERT_PLAN_DAO);
-             empDao = properties.getProperty(PROPERT_EMP_DAO);
-             proDao = properties.getProperty(PROPERT_PRO_DAO);
+            empDao = properties.getProperty(PROPERT_EMP_DAO);
+            proDao = properties.getProperty(PROPERT_PRO_DAO);
+            jouDao = properties.getProperty(PROPERT_JOU_DAO);
+            vilDao = properties.getProperty(PROPERT_VIL_DAO);
 
         } catch (IOException e) {
             throw new DaoConfigurationException("Impossible de charger le fichier properties " + FICHIER_PROPERTIES, e);
@@ -78,31 +84,50 @@ public class DaoFactory {
         try {
             Class planDaoClass = Class.forName(planDao);
             Constructor[] constr = planDaoClass.getConstructors();
-            return (PlanningDao)constr[0].newInstance(this);
+            return (PlanningDao) constr[0].newInstance(this);
         } catch (Exception e) {
             throw new DaoConfigurationException("problème d'injection avec la classe appareils", e);
         }
     }
-    
-    
-      public EmployeDao getEmployeDao() {
+
+    public EmployeDao getEmployeDao() {
         try {
             Class empDaoClass = Class.forName(empDao);
             Constructor[] constr = empDaoClass.getConstructors();
-            return (EmployeDao)constr[0].newInstance(this);
+            return (EmployeDao) constr[0].newInstance(this);
         } catch (Exception e) {
             throw new DaoConfigurationException("problème d'injection avec la classe employé", e);
         }
     }
-      
-      
-         public ProjetDao getProjetDao() {
+
+    public ProjetDao getProjetDao() {
         try {
             Class proDaoClass = Class.forName(proDao);
             Constructor[] constr = proDaoClass.getConstructors();
-            return (ProjetDao)constr[0].newInstance(this);
+            return (ProjetDao) constr[0].newInstance(this);
         } catch (Exception e) {
-            throw new DaoConfigurationException("problème d'injection avec la classe employé", e);
+            throw new DaoConfigurationException("problème d'injection avec la classe projet", e);
+        }
+    }
+
+    public JourDao getJourDao() {
+        try {
+            Class proDaoClass = Class.forName(jouDao);
+            Constructor[] constr = proDaoClass.getConstructors();
+            return (JourDao) constr[0].newInstance(this);
+        } catch (Exception e) {
+            throw new DaoConfigurationException("problème d'injection avec la classe jour", e);
+        }
+    }
+    
+    
+        public VilleDao getVilleDao() {
+        try {
+            Class proDaoClass = Class.forName(vilDao);
+            Constructor[] constr = proDaoClass.getConstructors();
+            return (VilleDao) constr[0].newInstance(this);
+        } catch (Exception e) {
+            throw new DaoConfigurationException("problème d'injection avec la classe ville", e);
         }
     }
 

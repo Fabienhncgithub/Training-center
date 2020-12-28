@@ -14,6 +14,14 @@ public class Ville {
         this.commune = commune;
     }
 
+    public Ville(int cp, String commune) {
+        this.cp = cp;
+        this.commune = commune;
+    }
+    
+    
+    
+
     public int getIdVille() {
         return idVille;
     }
@@ -49,7 +57,10 @@ public class Ville {
     
     
     
-    
+        @Override
+    public String toString() {
+        return commune;
+    }
     
     
 

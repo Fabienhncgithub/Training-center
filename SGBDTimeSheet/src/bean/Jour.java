@@ -41,6 +41,11 @@ public class Jour {
     public void setListePlanning(List<Planning> listePlanning) {
         this.listePlanning = listePlanning;
     }
+
+    @Override
+    public String toString() {
+        return (String.valueOf(idJour));
+    }
     
     
  

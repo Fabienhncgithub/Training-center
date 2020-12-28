@@ -5,13 +5,15 @@
  */
 package dao;
 
-import bean.Employé;
+import bean.Ville;
 import java.util.ArrayList;
 
-
-public interface EmployeDao {
-
-    public  ArrayList<Employé> selectEmployes() throws DaoException;
-
-    public void insertEmp(Employé employe);
+/**
+ *
+ * @author Fabien
+ */
+public interface VilleDao {
+    
+     public  ArrayList<Ville> selectVilles() throws DaoException;
+    
 }

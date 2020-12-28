@@ -32,27 +32,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuPlanningActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuProjet">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Projet"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuJour">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Jour"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuVille">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Ville"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuEmploy&#xe9;">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Employ&#xe9;"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuEmploy&#xe9;ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -98,12 +83,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="966" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="274" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="644" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

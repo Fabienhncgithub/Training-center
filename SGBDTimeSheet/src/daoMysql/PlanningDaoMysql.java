@@ -42,14 +42,18 @@ public class PlanningDaoMysql implements PlanningDao {
             + "FROM ville JOIN employe ON employe.idVille = ville.idVille "
             + "JOIN planning ON planning.idEmploye = employe.`idEmployé` "
             + "JOIN projet ON projet.idProjet = planning.idProjet "
-            + "JOIN jour ON planning.idJour = jour.idJour and employe.`idEmployé` = ? order by 1";
+            + "JOIN jour ON planning.idJour = jour.idJour and employe.nom LIKE ? order by 1";
 
-        private static final String SQL_SELECT_PAR_PRO = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune, planning.idPlanning, planning.nbHeures, jour.idJour, jour.date, projet.idProjet, projet.nom "
+    private static final String SQL_SELECT_PAR_PRO = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune, planning.idPlanning, planning.nbHeures, jour.idJour, jour.date, projet.idProjet, projet.nom "
             + "FROM ville JOIN employe ON employe.idVille = ville.idVille "
             + "JOIN planning ON planning.idEmploye = employe.`idEmployé` "
             + "JOIN projet ON projet.idProjet = planning.idProjet "
             + "JOIN jour ON planning.idJour = jour.idJour and projet.`idProjet` = ? order by 1";
+
     
+     private static final String SQL_INSERT = "INSERT into planning ( idEmploye,idProjet, idJour,nbHeures) values (?, ?, ?, ?)";
+     
+     
     
     @Override
     public ArrayList<Planning> selectPlanning() throws DaoException {
@@ -80,7 +84,7 @@ public class PlanningDaoMysql implements PlanningDao {
     }
 
     @Override
-    public ArrayList<Planning> selectPlanningParEmp(int emp) throws DaoException {
+    public ArrayList<Planning> selectPlanningParEmp(String nom) throws DaoException {
         Connection conn = null;
         PreparedStatement prepStat = null;
         ResultSet resu = null;
@@ -89,11 +93,9 @@ public class PlanningDaoMysql implements PlanningDao {
 
         try {
             conn = daoFactory.getConnection();
-            if (emp == -1) {
-                prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_SELECT_TOUS, false, (Object[]) null);
-            } else {
-                prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_SELECT_PAR_EMP, false, emp);
-            }
+
+            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_SELECT_PAR_EMP,  false, (Object[]) null);
+            prepStat.setString(1, "%" + nom + "%");
             resu = prepStat.executeQuery();
             while (resu.next()) {
 
@@ -141,6 +143,28 @@ public class PlanningDaoMysql implements PlanningDao {
             DaoUtil.fermeturesSilencieuses(prepStat, conn);
         }
         return myList;
+    }
+
+    @Override
+    public void insertPlan(Planning planning) {
+               Connection conn = null;
+        PreparedStatement prepStat = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            conn = daoFactory.getConnection();
+
+            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_INSERT, false, planning.getEmployé().getIdEmployé(), planning.getProjet().getIdProjet(),planning.getJour().getIdJour(), planning.getNbHeures());
+                    
+            prepStat.executeUpdate();
+        } 
+        catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        finally {
+            DaoUtil.fermeturesSilencieuses(prepStat, conn);
+        }
+    
     }
 
 }

@@ -6,6 +6,7 @@
 package presentation;
 
 import bean.Employé;
+import bean.Planning;
 import java.util.ArrayList;
 
 /**
@@ -76,4 +77,16 @@ public class TableModelEmploye extends javax.swing.table.AbstractTableModel {
         }
         return null;
     }
+    
+    
+        public ArrayList<Employé> getMyList() {
+        return myList;
+    }
+
+    public void setMyList(ArrayList<Employé> myList) {
+        this.myList = myList;
+        this.fireTableDataChanged();
+    }
+    
+    
 }

@@ -21,19 +21,19 @@ import java.util.ArrayList;
  *
  * @author Fabien
  */
-public class EmployeDaoMysql implements EmployeDao{
-    
-       private  DaoFactory daoFactory;
+public class EmployeDaoMysql implements EmployeDao {
+
+    private DaoFactory daoFactory;
 
     public EmployeDaoMysql(DaoFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
-    
-    
+
     private static final String SQL_SELECT_TOUS = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune from ville join employe where employe.idVille = ville.idVille order by 1";
+
+    private static final String SQL_INSERT = "INSERT into employe ( nom,prenom,adresse ,email,idVille) values (?, ?, ?, ?,?)";
     
-    
-     
+
     public ArrayList selectEmployes() throws DaoException {
         Connection conn = null;
         PreparedStatement prepStat = null;
@@ -48,7 +48,7 @@ public class EmployeDaoMysql implements EmployeDao{
             while (resu.next()) {
 
                 myList.add(new Employé(resu.getInt(1), resu.getString(2), resu.getString(3), resu.getString(4), resu.getString(5),
-                        new Ville(resu.getInt(6), resu.getInt(7),resu.getString(8))));
+                        new Ville(resu.getInt(6), resu.getInt(7), resu.getString(8))));
             }
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -57,7 +57,31 @@ public class EmployeDaoMysql implements EmployeDao{
         }
         return myList;
     }
+
+    @Override
+    public void insertEmp(Employé employe) {
+        System.out.println(employe);
+                     Connection conn = null;
+        PreparedStatement prepStat = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            conn = daoFactory.getConnection();
+            
+            
+
+            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_INSERT, false, employe.getNom(), employe.getPrénom(), employe.getAdresse(),employe.getEmail(),employe.getVille().getIdVille());
+                    
+            prepStat.executeUpdate();
+        } 
+        catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        finally {
+            DaoUtil.fermeturesSilencieuses(prepStat, conn);
+        }
     
     
-    
+    }
+
 }

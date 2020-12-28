@@ -15,8 +15,6 @@ import java.util.logging.Logger;
  */
 public class JFPrincipale extends javax.swing.JFrame {
 
-
-    
     public JFPrincipale() {
         initComponents();
     }
@@ -36,10 +34,7 @@ public class JFPrincipale extends javax.swing.JFrame {
         jMenuQuitter = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuPlanning = new javax.swing.JMenuItem();
-        jMenuProjet = new javax.swing.JMenuItem();
-        jMenuJour = new javax.swing.JMenuItem();
-        jMenuVille = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuEmployé = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,11 +42,11 @@ public class JFPrincipale extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 966, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGap(0, 644, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Fichier");
@@ -76,22 +71,13 @@ public class JFPrincipale extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuPlanning);
 
-        jMenuProjet.setText("Projet");
-        jMenu2.add(jMenuProjet);
-
-        jMenuJour.setText("Jour");
-        jMenu2.add(jMenuJour);
-
-        jMenuVille.setText("Ville");
-        jMenu2.add(jMenuVille);
-
-        jMenuItem6.setText("Employé");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        jMenuEmployé.setText("Employé");
+        jMenuEmployé.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                jMenuEmployéActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem6);
+        jMenu2.add(jMenuEmployé);
 
         jMenuBar1.add(jMenu2);
 
@@ -116,9 +102,9 @@ public class JFPrincipale extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuQuitterActionPerformed
 
     private void jMenuPlanningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPlanningActionPerformed
-       jDesktopPane1.removeAll();
-       JIFPlanning f = new JIFPlanning();
-       jDesktopPane1.add(f);
+        jDesktopPane1.removeAll();
+        JIFPlanning f = new JIFPlanning();
+        jDesktopPane1.add(f);
         try {
             f.setMaximum(true);
         } catch (PropertyVetoException ex) {
@@ -127,17 +113,17 @@ public class JFPrincipale extends javax.swing.JFrame {
         jDesktopPane1.repaint();
     }//GEN-LAST:event_jMenuPlanningActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-              jDesktopPane1.removeAll();
-       JIFEmployé f = new JIFEmployé();
-       jDesktopPane1.add(f);
+    private void jMenuEmployéActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuEmployéActionPerformed
+        jDesktopPane1.removeAll();
+        JIFEmployé f = new JIFEmployé();
+        jDesktopPane1.add(f);
         try {
             f.setMaximum(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(JFPrincipale.class.getName()).log(Level.SEVERE, null, ex);
         }
         jDesktopPane1.repaint();
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_jMenuEmployéActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,11 +165,8 @@ public class JFPrincipale extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuJour;
+    private javax.swing.JMenuItem jMenuEmployé;
     private javax.swing.JMenuItem jMenuPlanning;
-    private javax.swing.JMenuItem jMenuProjet;
     private javax.swing.JMenuItem jMenuQuitter;
-    private javax.swing.JMenuItem jMenuVille;
     // End of variables declaration//GEN-END:variables
 }
