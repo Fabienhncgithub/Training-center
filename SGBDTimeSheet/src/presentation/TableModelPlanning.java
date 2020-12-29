@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class TableModelPlanning extends javax.swing.table.AbstractTableModel {
 
-    private String[] columnNames = {"Projet", "Heure", "Date","Employé","Ville"};
+    private String[] columnNames = {"Projet", "Heure", "Date", "Employé", "Ville"};
     private ArrayList<Planning> myList;
 
     public TableModelPlanning(ArrayList myList) {
@@ -43,13 +43,15 @@ public class TableModelPlanning extends javax.swing.table.AbstractTableModel {
             case 0:
                 return myPlan.getProjet().getNomProjet();
             case 1:
-             return myPlan.getNbHeures();
+                return myPlan.getNbHeures();
             case 2:
-             return myPlan.getJour().getDate();
+                return myPlan.getJour().getDate();
             case 3:
-             return myPlan.getEmployé().getNom();
+                return myPlan.getEmployé().getNom();
             case 4:
-                  return myPlan.getEmployé().getVille().getCommune();
+                return myPlan.getEmployé().getVille().getCommune();
+            case 5:
+                return myPlan.getIdPlanning();
         }
         return null;
     }
@@ -81,7 +83,15 @@ public class TableModelPlanning extends javax.swing.table.AbstractTableModel {
         this.myList = myList;
         this.fireTableDataChanged();
     }
+
+    Planning getMyList(int ind) {
+             return myList.get(ind);
+    }
+
     
     
     
+    
+    
+
 }

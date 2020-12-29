@@ -9,6 +9,7 @@ import bean.Employé;
 import bean.Planning;
 import bean.Projet;
 import com.sun.javafx.scene.control.skin.TextFieldSkin;
+import dao.DaoException;
 import dao.DaoFactory;
 import dao.EmployeDao;
 import dao.PlanningDao;
@@ -16,7 +17,11 @@ import dao.ProjetDao;
 import java.awt.Color;
 import java.awt.TextField;
 import java.util.ArrayList;
+import java.util.Date;
+import javafx.scene.control.RadioButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -24,7 +29,7 @@ import javax.swing.JTable;
  * @author Fabien
  */
 public class JIFPlanning extends javax.swing.JInternalFrame {
-
+    
     private DaoFactory factory = DaoFactory.getInstance();
     private PlanningDao daoPlan = factory.getPlanningDao();
     private EmployeDao employeDao = factory.getEmployeDao();
@@ -61,6 +66,8 @@ public class JIFPlanning extends javax.swing.JInternalFrame {
         jButAdd = new java.awt.Button();
         jButMod = new java.awt.Button();
         JButDel = new java.awt.Button();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Planning"));
         setVisible(true);
@@ -127,6 +134,11 @@ public class JIFPlanning extends javax.swing.JInternalFrame {
         });
 
         jButMod.setLabel("Modifier\n");
+        jButMod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButModActionPerformed(evt);
+            }
+        });
 
         JButDel.setLabel("Supprimer\n");
         JButDel.addActionListener(new java.awt.event.ActionListener() {
@@ -135,70 +147,89 @@ public class JIFPlanning extends javax.swing.JInternalFrame {
             }
         });
 
+        jDateChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooser1PropertyChange(evt);
+            }
+        });
+
+        jDateChooser2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooser2PropertyChange(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jButMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(JButDel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioAll))
-                        .addGap(78, 78, 78)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jRadioPro)))
+                        .addComponent(jRadioAll)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(30, 30, 30)
+                                .addComponent(jComboEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(265, 265, 265)
+                                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
+                                .addComponent(jTextSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(124, 124, 124)
-                                .addComponent(jRadioNom)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jRadioDat)
-                                .addGap(38, 38, 38))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(jButAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(179, 179, 179)
-                .addComponent(JButDel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88))
+                                .addGap(98, 98, 98)
+                                .addComponent(jRadioPro)
+                                .addGap(241, 241, 241)
+                                .addComponent(jRadioNom)))
+                        .addGap(106, 106, 106)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioDat)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioAll)
-                            .addComponent(jRadioPro)
-                            .addComponent(jRadioNom)
-                            .addComponent(jRadioDat))
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addContainerGap(364, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JButDel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jRadioAll)
+                        .addComponent(jRadioPro)
+                        .addComponent(jRadioNom))
+                    .addComponent(jRadioDat, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(13, 13, 13))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JButDel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jTextSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
         );
 
@@ -217,7 +248,15 @@ public class JIFPlanning extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextSearchActionPerformed
 
     private void jTextSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextSearchKeyTyped
+        
+        char c = evt.getKeyChar();
 
+        if (!Character.isLetter(c)) {
+            if (!Character.isDigit(c)) {
+                evt.consume();
+            }
+        }
+        
         String search = String.valueOf(evt.getKeyChar()).trim();
         if (search.isEmpty()) {
             myPlanModel.setMyList(daoPlan.selectPlanningParEmp(search));
@@ -231,27 +270,50 @@ public class JIFPlanning extends javax.swing.JInternalFrame {
     private void jRadioProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioProActionPerformed
         jComboEmp.setEnabled(true);
         jTextSearch.setEnabled(false);
+        jDateChooser1.setEnabled(false);
+        jDateChooser2.setEnabled(false);
     }//GEN-LAST:event_jRadioProActionPerformed
 
     private void jRadioAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioAllActionPerformed
         jComboEmp.setEnabled(false);
         jTextSearch.setEnabled(false);
+        jDateChooser1.setEnabled(false);
+        jDateChooser2.setEnabled(false);
         myPlanModel.setMyList(daoPlan.selectPlanning());
     }//GEN-LAST:event_jRadioAllActionPerformed
 
     private void jRadioDatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioDatActionPerformed
-
+         jComboEmp.setEnabled(false);
+        jTextSearch.setEnabled(false);
+        jDateChooser1.setEnabled(true);
+        jDateChooser2.setEnabled(true);
 
     }//GEN-LAST:event_jRadioDatActionPerformed
 
     private void jRadioNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioNomActionPerformed
         jComboEmp.setEnabled(false);
         jTextSearch.setEnabled(true);
+        jDateChooser1.setEnabled(false);
+        jDateChooser2.setEnabled(false);
 
     }//GEN-LAST:event_jRadioNomActionPerformed
 
     private void JButDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButDelActionPerformed
-        // TODO add your handling code here:
+        if (jTable1.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Sélectionnez d'abord une ligne svp !", "Avertissement", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int rep = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiment supprimer "
+                    + myPlanModel.getValueAt(jTable1.convertRowIndexToModel(jTable1.getSelectedRow()), 0) + " ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (rep == JOptionPane.YES_OPTION)
+                try {
+                daoPlan.deletePlanning((String) myPlanModel.getValueAt(jTable1.convertRowIndexToModel(jTable1.getSelectedRow()), 5));
+                
+            } catch (DaoException e) {
+                JOptionPane.showMessageDialog(null, "Suppression impossible !", "Avertissement", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        // après la suppression : rafraîchir les données en relisant la BD
+        myPlanModel.setMyList(daoPlan.selectPlanning());
     }//GEN-LAST:event_JButDelActionPerformed
 
     private void jButAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButAddActionPerformed
@@ -260,6 +322,52 @@ public class JIFPlanning extends javax.swing.JInternalFrame {
         myPlanModel.setMyList(daoPlan.selectPlanning());
     }//GEN-LAST:event_jButAddActionPerformed
 
+    private void jButModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButModActionPerformed
+        
+        if (jTable1.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Sélectionnez d'abord une ligne svp !", "Avertissement", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // renvoie l'objet Appareil à passer en paramètre
+            Planning plan = myPlanModel.getMyList(jTable1.convertRowIndexToModel(jTable1.getSelectedRow()));
+            // récupère la JFrame parente
+            JFrame parent = (JFrame) (this.getDesktopPane().getTopLevelAncestor());
+            new JDPlanModif(parent, "MODIFICATION PLANNING", plan);
+
+            // après la modification : rafraîchir les données en relisant la BD
+            myPlanModel.setMyList(daoPlan.selectPlanning());
+        }
+        myPlanModel.setMyList(daoPlan.selectPlanning());
+
+    }//GEN-LAST:event_jButModActionPerformed
+
+    private void jDateChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser1PropertyChange
+        Date dateMin = jDateChooser1.getDate();
+        Date dateMax = jDateChooser2.getDate();
+        
+        if (jRadioDat.isSelected()) {
+            if (dateMin != null && dateMax != null) {
+                ArrayList<Planning> listePlanning = daoPlan.selectPlanningDate(dateMin, dateMax);
+                myPlanModel.setMyList(listePlanning);
+            }else{
+            JOptionPane.showMessageDialog(this, "choisir une date");
+            }
+        }
+    }//GEN-LAST:event_jDateChooser1PropertyChange
+
+    private void jDateChooser2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser2PropertyChange
+               Date dateMin = jDateChooser1.getDate();
+        Date dateMax = jDateChooser2.getDate();
+        
+        if (jRadioDat.isSelected()) {
+            if (dateMin != null && dateMax != null) {
+                ArrayList<Planning> listePlanning = daoPlan.selectPlanningDate(dateMin, dateMax);
+                myPlanModel.setMyList(listePlanning);
+            }else{
+            JOptionPane.showMessageDialog(this, "choisir une date");
+            }
+        }
+    }//GEN-LAST:event_jDateChooser2PropertyChange
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button JButDel;
@@ -267,6 +375,8 @@ public class JIFPlanning extends javax.swing.JInternalFrame {
     private java.awt.Button jButAdd;
     private java.awt.Button jButMod;
     private javax.swing.JComboBox jComboEmp;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JRadioButton jRadioAll;
     private javax.swing.JRadioButton jRadioDat;
     private javax.swing.JRadioButton jRadioNom;
@@ -278,6 +388,11 @@ public class JIFPlanning extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void fillComponents() {
+        jDateChooser1.setDate(new Date());
+        jDateChooser2.setDate(new Date());
+        
+        
+        
         ArrayList<Projet> listeProjet = projetDao.selectProjets();
         listeProjet.add(0, new Projet(-1, "*"));
         for (Projet pro : listeProjet) {

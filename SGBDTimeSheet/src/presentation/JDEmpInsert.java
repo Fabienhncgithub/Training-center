@@ -89,10 +89,26 @@ public class JDEmpInsert extends javax.swing.JDialog {
         jLabel5.setText("Ville");
 
         jTextFieldNom.setText("\n\n");
+        jTextFieldNom.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldNomKeyTyped(evt);
+            }
+        });
+
+        jTextFieldPrenom.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldPrenomKeyTyped(evt);
+            }
+        });
 
         jTextFieldAdresse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldAdresseActionPerformed(evt);
+            }
+        });
+        jTextFieldAdresse.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldAdresseKeyTyped(evt);
             }
         });
 
@@ -188,7 +204,7 @@ public class JDEmpInsert extends javax.swing.JDialog {
     }//GEN-LAST:event_OkActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        // TODO add your handling code here:
+         this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     private void jTextFieldAdresseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAdresseActionPerformed
@@ -198,6 +214,27 @@ public class JDEmpInsert extends javax.swing.JDialog {
     private void jComboBoxVilleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxVilleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxVilleActionPerformed
+
+    private void jTextFieldNomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNomKeyTyped
+                   char c = evt.getKeyChar();
+            if (!Character.isLetter(c)) {
+                evt.consume();
+        }  
+    }//GEN-LAST:event_jTextFieldNomKeyTyped
+
+    private void jTextFieldPrenomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPrenomKeyTyped
+                   char c = evt.getKeyChar();
+            if (!Character.isLetter(c)) {
+                evt.consume();
+        }  
+    }//GEN-LAST:event_jTextFieldPrenomKeyTyped
+
+    private void jTextFieldAdresseKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldAdresseKeyTyped
+                  char c = evt.getKeyChar();
+            if (!Character.isLetter(c)) {
+                evt.consume();
+        }  
+    }//GEN-LAST:event_jTextFieldAdresseKeyTyped
 
     /**
      * @param args the command line arguments

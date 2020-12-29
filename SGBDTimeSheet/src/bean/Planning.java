@@ -6,13 +6,13 @@
 package bean;
 
 public class Planning {
-    private int idPlanning;
+    private String idPlanning;
     private int nbHeures;
     private Employé employé;
     private Jour jour;
     private Projet projet;
 
-    public Planning(int idPlanning, int nbHeures, Employé employé, Jour jour, Projet projet) {
+    public Planning(String idPlanning, int nbHeures, Employé employé, Jour jour, Projet projet) {
         this.idPlanning = idPlanning;
         this.nbHeures = nbHeures;
         this.employé = employé;
@@ -23,11 +23,11 @@ public class Planning {
     public Planning() {
     }
 
-    public int getIdPlanning() {
+    public String getIdPlanning() {
         return idPlanning;
     }
 
-    public void setIdPlanning(int idPlanning) {
+    public void setIdPlanning(String idPlanning) {
         this.idPlanning = idPlanning;
     }
 

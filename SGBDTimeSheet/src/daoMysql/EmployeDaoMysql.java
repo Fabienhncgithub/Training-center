@@ -32,7 +32,10 @@ public class EmployeDaoMysql implements EmployeDao {
     private static final String SQL_SELECT_TOUS = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune from ville join employe where employe.idVille = ville.idVille order by 1";
 
     private static final String SQL_INSERT = "INSERT into employe ( nom,prenom,adresse ,email,idVille) values (?, ?, ?, ?,?)";
-    
+
+    private static final String SQL_DELETE = "delete from employe where idEmployé = ?";
+
+    private static final String SQL_UPDATE = "Update employe set nom = ?, prenom = ?, adresse = ?, email = ?, idVille = ? where idEmployé = ?";
 
     public ArrayList selectEmployes() throws DaoException {
         Connection conn = null;
@@ -61,27 +64,68 @@ public class EmployeDaoMysql implements EmployeDao {
     @Override
     public void insertEmp(Employé employe) {
         System.out.println(employe);
-                     Connection conn = null;
+        Connection conn = null;
         PreparedStatement prepStat = null;
 
         try {
             /* Récupération d'une connexion depuis la Factory */
             conn = daoFactory.getConnection();
-            
-            
 
-            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_INSERT, false, employe.getNom(), employe.getPrénom(), employe.getAdresse(),employe.getEmail(),employe.getVille().getIdVille());
-                    
+            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_INSERT, false, employe.getNom(), employe.getPrénom(), employe.getAdresse(), employe.getEmail(), employe.getVille().getIdVille());
+
             prepStat.executeUpdate();
-        } 
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new DaoException(e);
-        }
-        finally {
+        } finally {
             DaoUtil.fermeturesSilencieuses(prepStat, conn);
         }
-    
-    
+
+    }
+
+    @Override
+    public void deleteEmploye(int idEmployé) throws DaoException {
+        {
+            System.out.println(idEmployé);
+            Connection conn = null;
+            PreparedStatement prepStat = null;
+
+            try {
+                /* Récupération d'une connexion depuis la Factory */
+                conn = daoFactory.getConnection();
+                prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_DELETE, false, idEmployé);
+                prepStat.executeUpdate();
+            } catch (SQLException e) {
+                throw new DaoException(e);
+            } finally {
+                DaoUtil.fermeturesSilencieuses(prepStat, conn);
+            }
+
+        }
+    }
+
+    @Override
+    public void updateEmploye(Employé employe) {
+
+        Connection conn = null;
+        PreparedStatement prepStat = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            conn = daoFactory.getConnection();
+
+            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_UPDATE, false,
+            employe.getNom(),
+            employe.getPrénom(),
+            employe.getAdresse(),
+            employe.getEmail(),
+            employe.getVille().getIdVille(),
+            employe.getIdEmployé());
+                prepStat.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            DaoUtil.fermeturesSilencieuses(prepStat, conn);
+        }
     }
 
 }

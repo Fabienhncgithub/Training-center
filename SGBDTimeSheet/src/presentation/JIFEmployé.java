@@ -5,8 +5,12 @@
  */
 package presentation;
 
+import bean.Employé;
+import dao.DaoException;
 import dao.DaoFactory;
 import dao.EmployeDao;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -39,7 +43,7 @@ public class JIFEmployé extends javax.swing.JInternalFrame {
         jTable1 = new JTable(myEmpModel);
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        JButtonSupprimer = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Eployé"));
         setVisible(true);
@@ -53,9 +57,19 @@ public class JIFEmployé extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Modifier \n");
+        jButton2.setText("Modifier  ");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Supprimer\n");
+        JButtonSupprimer.setText("Supprimer\n");
+        JButtonSupprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JButtonSupprimerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,7 +82,7 @@ public class JIFEmployé extends javax.swing.JInternalFrame {
                 .addGap(232, 232, 232)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addComponent(JButtonSupprimer)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -79,7 +93,7 @@ public class JIFEmployé extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(JButtonSupprimer))
                 .addGap(27, 27, 27))
         );
 
@@ -92,11 +106,47 @@ public class JIFEmployé extends javax.swing.JInternalFrame {
         myEmpModel.setMyList(daoEmp.selectEmployes());
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void JButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonSupprimerActionPerformed
+        if(jTable1.getSelectedRow() == -1)
+           JOptionPane.showMessageDialog(null,"Sélectionnez d'abord une ligne svp !","Avertissement",JOptionPane.ERROR_MESSAGE); 
+        
+        
+         else {
+            int rep = JOptionPane.showConfirmDialog(this,"Voulez-vous vraiment supprimer " +
+                    myEmpModel.getValueAt(jTable1.convertRowIndexToModel(jTable1.getSelectedRow()), 0) + " ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (rep == JOptionPane.YES_OPTION)
+                try {    
+                    daoEmp.deleteEmploye((Integer)myEmpModel.getValueAt(jTable1.convertRowIndexToModel(jTable1.getSelectedRow()), 6));
+                }
+                catch (DaoException e) {
+                    JOptionPane.showMessageDialog(null,"Suppression impossible !","Avertissement",JOptionPane.ERROR_MESSAGE);
+                }
+        }
+        // après la suppression : rafraîchir les données en relisant la BD
+        myEmpModel.setMyList(daoEmp.selectEmployes()); 
+        
+    }//GEN-LAST:event_JButtonSupprimerActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+                   if (jTable1.getSelectedRow() == -1)
+            JOptionPane.showMessageDialog(this,"Sélectionnez d'abord une ligne svp !","Avertissement",JOptionPane.ERROR_MESSAGE);
+        else {
+            // renvoie l'objet Appareil à passer en paramètre
+           Employé employe = myEmpModel.getMyList(jTable1.convertRowIndexToModel(jTable1.getSelectedRow()));
+            // récupère la JFrame parente
+            JFrame parent = (JFrame)(this.getDesktopPane().getTopLevelAncestor());
+         new JDEmpModif(parent, "MODIFICATION EMPLOYE", employe);
+            
+            // après la modification : rafraîchir les données en relisant la BD
+            myEmpModel.setMyList(daoEmp.selectEmployes()); 
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JButtonSupprimer;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

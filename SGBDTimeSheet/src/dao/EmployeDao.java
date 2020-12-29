@@ -14,4 +14,8 @@ public interface EmployeDao {
     public  ArrayList<Employé> selectEmployes() throws DaoException;
 
     public void insertEmp(Employé employe);
+
+    public void deleteEmploye(int idEmploye);
+
+    public void updateEmploye(Employé employe);
 }

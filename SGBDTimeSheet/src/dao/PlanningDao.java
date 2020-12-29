@@ -7,6 +7,7 @@ package dao;
 
 import bean.Planning;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -22,5 +23,11 @@ public interface PlanningDao {
  public ArrayList<Planning> selectPlanningParProj(int proj) throws DaoException;
 
     public void insertPlan(Planning planning);
+
+    public void deletePlanning(String idPlanning);
+
+    public void updatePlanning(Planning planning);
+
+    public ArrayList<Planning> selectPlanningDate(Date dateMin, Date dateMax);
     
 }

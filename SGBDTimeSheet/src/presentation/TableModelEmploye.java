@@ -53,6 +53,9 @@ public class TableModelEmploye extends javax.swing.table.AbstractTableModel {
                 return myPlan.getVille().getCommune();
             case 5:
                 return myPlan.getVille().getCp();
+            case 6 : 
+                return myPlan.getIdEmployé();
+                
         }
         return null;
     }
@@ -86,6 +89,10 @@ public class TableModelEmploye extends javax.swing.table.AbstractTableModel {
     public void setMyList(ArrayList<Employé> myList) {
         this.myList = myList;
         this.fireTableDataChanged();
+    }
+
+    Employé getMyList(int ind) {
+            return myList.get(ind);
     }
     
     

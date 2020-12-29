@@ -29,14 +29,11 @@ public class JDPlanInsert extends javax.swing.JDialog {
     private EmployeDao employeDao = factory.getEmployeDao();
     private ProjetDao projetDao = factory.getProjetDao();
     private JourDao jourDao = factory.getJourDao();
-            
     
     private TableModelPlanning myPlanModel = new TableModelPlanning(daoPlan.selectPlanning());
     
-    
-
     public JDPlanInsert(java.awt.Frame parent, String titre) {
-        super(parent, titre,true);
+        super(parent, titre, true);
         initComponents();
         fillComponents();
         //getRootPane().setDefaultButton(JButtonOk);
@@ -77,6 +74,12 @@ public class JDPlanInsert extends javax.swing.JDialog {
         JComboBoxEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JComboBoxEmpActionPerformed(evt);
+            }
+        });
+
+        jTextFieldnbH.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldnbHKeyTyped(evt);
             }
         });
 
@@ -156,42 +159,54 @@ public class JDPlanInsert extends javax.swing.JDialog {
     }//GEN-LAST:event_JComboBoxEmpActionPerformed
 
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
-
-   Planning planning = new Planning();
-   planning.setEmployé((Employé)JComboBoxEmp.getSelectedItem());
-   planning.setProjet((Projet)jComboBoxproj.getSelectedItem());
-   planning.setJour((Jour)jComboBoxJour.getSelectedItem());
-   planning.setNbHeures(Integer.parseInt(jTextFieldnbH.getText()));
-   
+        if(Integer.parseInt(jTextFieldnbH.getText())>=10){
+         JOptionPane.showMessageDialog(null, "pas plus de 10H par jour ! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
+        
+        }else{
+        Planning planning = new Planning();
+        planning.setEmployé((Employé) JComboBoxEmp.getSelectedItem());
+        planning.setProjet((Projet) jComboBoxproj.getSelectedItem());
+        planning.setJour((Jour) jComboBoxJour.getSelectedItem());
+        planning.setNbHeures(Integer.parseInt(jTextFieldnbH.getText()));
         
         try {
             daoPlan.insertPlan(planning);
         } catch (DaoException e) {
-            JOptionPane.showMessageDialog(null,"Insertion impossible ! ","Avertissement",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Insertion impossible ! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
         }
-
+        
         this.dispose();
+        }
     }//GEN-LAST:event_jButtonOKActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-     this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
-   private void fillComponents()
-    {
-        
+    private void jTextFieldnbHKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldnbHKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }        
+    }//GEN-LAST:event_jTextFieldnbHKeyTyped
+    
+    private void fillComponents() {
+
         /* charger toutes les catégories */
-        ArrayList <Employé> emp = employeDao.selectEmployes();
-        for (int i=0;i<emp.size();i++)
+        ArrayList<Employé> emp = employeDao.selectEmployes();
+        for (int i = 0; i < emp.size(); i++) {
             JComboBoxEmp.addItem(emp.get(i));
+        }
         
-           ArrayList <Projet> pro = projetDao.selectProjets();
-        for (int i=0;i<pro.size();i++)
+        ArrayList<Projet> pro = projetDao.selectProjets();
+        for (int i = 0; i < pro.size(); i++) {
             jComboBoxproj.addItem(pro.get(i));
-       
-             ArrayList <Jour> jour = jourDao.selectJours();
-        for (int i=0;i<jour.size();i++)
+        }
+        
+        ArrayList<Jour> jour = jourDao.selectJours();
+        for (int i = 0; i < jour.size(); i++) {
             jComboBoxJour.addItem(jour.get(i));
+        }
         
     }
 
