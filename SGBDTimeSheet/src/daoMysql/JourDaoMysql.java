@@ -15,7 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -64,21 +64,32 @@ public class JourDaoMysql implements JourDao {
         PreparedStatement prepStat = null;
         ResultSet resu = null;
 
-        Jour j = new Jour();
+        Jour j = null;
 
         try {
             conn = daoFactory.getConnection();
-            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_INSERT_JOUR, true, new java.sql.Date(date.getTime()));
-            prepStat.executeUpdate();
-            resu = prepStat.getGeneratedKeys();
-            resu.next();
-            int idJour = resu.getInt(1);
-
-            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_RECUP_JOUR,false, idJour);
+            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_SELECT_TOUS, false, (Object[]) null);
             resu = prepStat.executeQuery();
+            while (resu.next()) {
+                if (date.toString().equals(resu.getDate("date").toString())) {
+                    j = new Jour(resu.getInt("idJour"), resu.getDate("date"));
+                }
 
-            if (resu.next()) {
-                j = new Jour(resu.getInt(1), resu.getDate(2));
+            }
+            if (j == null) {
+                conn = daoFactory.getConnection();
+                prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_INSERT_JOUR, true, new java.sql.Date(date.getTime()));
+                prepStat.executeUpdate();
+                resu = prepStat.getGeneratedKeys();
+                resu.next();
+                int idJour = resu.getInt(1);
+
+                prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_RECUP_JOUR, false, idJour);
+                resu = prepStat.executeQuery();
+
+                if (resu.next()) {
+                    j = new Jour(resu.getInt(1), resu.getDate(2));
+                }
             }
         } catch (SQLException e) {
             throw new DaoException(e);

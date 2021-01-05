@@ -18,4 +18,6 @@ public interface EmployeDao {
     public void deleteEmploye(int idEmploye);
 
     public void updateEmploye(Employé employe);
+
+    public boolean existEmp(Employé employe);
 }

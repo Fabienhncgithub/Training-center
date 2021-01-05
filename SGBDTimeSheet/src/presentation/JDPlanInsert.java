@@ -16,7 +16,7 @@ import dao.JourDao;
 import dao.PlanningDao;
 import dao.ProjetDao;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -168,17 +168,30 @@ public class JDPlanInsert extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "pas plus de 10H par jour ! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
 
         } else {
-            Jour jour = jourDao.creatJour(jDateChooser1.getDate());
-            
+
+            Jour jour = jourDao.creatJour(new java.sql.Date(jDateChooser1.getDate().getTime()));
+
             Planning planning = new Planning();
             planning.setEmployé((Employé) JComboBoxEmp.getSelectedItem());
             planning.setProjet((Projet) jComboBoxproj.getSelectedItem());
-          //  planning.setJour((Jour) jComboBoxJour.getSelectedItem());
+            //  planning.setJour((Jour) jComboBoxJour.getSelectedItem());
             planning.setNbHeures(Integer.parseInt(jTextFieldnbH.getText()));
             planning.setJour(jour);
-
+             int heur = Integer.parseInt(jTextFieldnbH.getText());
             try {
-                daoPlan.insertPlan(planning);
+                if (daoPlan.verifHeure(planning) == 0) {
+                    daoPlan.insertPlan(planning);
+                  
+                    
+                }
+                 
+                   else if (heur + daoPlan.verifHeure(planning) > 10) {
+
+                        JOptionPane.showMessageDialog(null, "Plus de 10H ! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        daoPlan.insertPlan(planning);
+                    }
+                
             } catch (DaoException e) {
                 JOptionPane.showMessageDialog(null, "Insertion impossible ! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
             }
@@ -215,7 +228,6 @@ public class JDPlanInsert extends javax.swing.JDialog {
 //        for (int i = 0; i < jour.size(); i++) {
 //            jComboBoxJour.addItem(jour.get(i));
 //        }
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

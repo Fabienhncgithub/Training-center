@@ -60,8 +60,10 @@ public class PlanningDaoMysql implements PlanningDao {
 
     private static final String SQL_DATE = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune, planning.idPlanning, planning.nbHeures, jour.idJour, jour.date, projet.idProjet, projet.nom FROM ville JOIN employe ON employe.idVille = ville.idVille JOIN planning ON planning.idEmploye = employe.`idEmployé` JOIN projet ON projet.idProjet = planning.idProjet JOIN jour ON planning.idJour = jour.idJour WHERE jour.date >= ? AND jour.date <= ? ";
 
+    
     private static final String SQL_VERIF = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune, planning.idPlanning, planning.nbHeures, jour.idJour, jour.date, projet.idProjet, projet.nom FROM ville JOIN employe ON employe.idVille = ville.idVille JOIN planning ON planning.idEmploye = employe.`idEmployé` JOIN projet ON projet.idProjet = planning.idProjet JOIN jour ON planning.idJour = jour.idJour WHERE planning.nbHeures<=10 GROUP BY 1";
     
+    private static final String SQL_VERIF_HEURE = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune, planning.idPlanning, planning.nbHeures, jour.idJour, jour.date, projet.idProjet, projet.nom FROM ville JOIN employe ON employe.idVille = ville.idVille JOIN planning ON planning.idEmploye = employe.`idEmployé` JOIN projet ON projet.idProjet = planning.idProjet JOIN jour ON planning.idJour = jour.idJour WHERE planning.idEmploye = ? and planning.idJour = ?";
     
     @Override
     public ArrayList<Planning> selectPlanning() throws DaoException {
@@ -247,5 +249,29 @@ public class PlanningDaoMysql implements PlanningDao {
         }
         return myList;
 
+    }
+
+    @Override
+    public int verifHeure(Planning planning) {
+          Connection conn = null;
+        PreparedStatement prepStat = null;
+          ResultSet resu = null;
+        int res = 0;
+        try {
+            conn = daoFactory.getConnection();
+            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_VERIF_HEURE, false, (Object[]) null);
+            prepStat.setInt(1, planning.getEmployé().getIdEmployé());
+            prepStat.setInt(2, planning.getJour().getIdJour());
+            
+            resu = prepStat.executeQuery();
+            if (resu.next()) {
+               res = resu.getInt("nbHeures");
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            DaoUtil.fermeturesSilencieuses(prepStat, conn);
+        }
+        return res;
     }
 }

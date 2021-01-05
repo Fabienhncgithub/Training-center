@@ -29,5 +29,7 @@ public interface PlanningDao {
     public void updatePlanning(Planning planning);
 
     public ArrayList<Planning> selectPlanningDate(Date dateMin, Date dateMax);
+
+    public int verifHeure(Planning planning);
     
 }

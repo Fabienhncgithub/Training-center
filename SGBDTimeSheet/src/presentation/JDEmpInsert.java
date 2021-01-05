@@ -183,7 +183,9 @@ public class JDEmpInsert extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkActionPerformed
-   Employé employe = new Employé();
+   
+        
+        Employé employe = new Employé();
    employe.setNom(jTextFieldNom.getText());
    employe.setPrénom(jTextFieldPrenom.getText());
    employe.setAdresse(jTextFieldAdresse.getText());
@@ -191,7 +193,11 @@ public class JDEmpInsert extends javax.swing.JDialog {
    employe.setVille((Ville)jComboBoxVille.getSelectedItem());
    
          try {
+             if(employeDao.existEmp(employe)){
+                  JOptionPane.showMessageDialog(null,"Insertion impossible Employé existe déjà! ","Avertissement",JOptionPane.ERROR_MESSAGE);
+             }else{
             employeDao.insertEmp(employe);
+             }
         } catch (DaoException e) {
             JOptionPane.showMessageDialog(null,"Insertion impossible ! ","Avertissement",JOptionPane.ERROR_MESSAGE);
         }

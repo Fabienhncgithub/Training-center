@@ -37,6 +37,8 @@ public class EmployeDaoMysql implements EmployeDao {
 
     private static final String SQL_UPDATE = "Update employe set nom = ?, prenom = ?, adresse = ?, email = ?, idVille = ? where idEmployé = ?";
 
+    private static final String SQL_VERIFICTION = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune from ville join employe where employe.idVille = ville.idVille  WHERE nom = ?, prenom = ?";
+
     public ArrayList selectEmployes() throws DaoException {
         Connection conn = null;
         PreparedStatement prepStat = null;
@@ -63,7 +65,6 @@ public class EmployeDaoMysql implements EmployeDao {
 
     @Override
     public void insertEmp(Employé employe) {
-        System.out.println(employe);
         Connection conn = null;
         PreparedStatement prepStat = null;
 
@@ -114,18 +115,45 @@ public class EmployeDaoMysql implements EmployeDao {
             conn = daoFactory.getConnection();
 
             prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_UPDATE, false,
-            employe.getNom(),
-            employe.getPrénom(),
-            employe.getAdresse(),
-            employe.getEmail(),
-            employe.getVille().getIdVille(),
-            employe.getIdEmployé());
-                prepStat.executeUpdate();
+                    employe.getNom(),
+                    employe.getPrénom(),
+                    employe.getAdresse(),
+                    employe.getEmail(),
+                    employe.getVille().getIdVille(),
+                    employe.getIdEmployé());
+            prepStat.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
             DaoUtil.fermeturesSilencieuses(prepStat, conn);
         }
+    }
+
+    @Override
+    public boolean existEmp(Employé employe) {
+        boolean result = true;
+
+        Connection conn = null;
+        PreparedStatement prepStat = null;
+        ResultSet resu = null;
+
+        ArrayList<Employé> myList = new ArrayList();
+
+        try {
+            conn = daoFactory.getConnection();
+            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_SELECT_TOUS, false, (Object[]) null);
+            resu = prepStat.executeQuery();
+            while (resu.next()) {
+
+            result = true;
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            DaoUtil.fermeturesSilencieuses(prepStat, conn);
+        }
+        return result;
+
     }
 
 }

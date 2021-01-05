@@ -177,7 +177,7 @@ public class JDPlanModif extends javax.swing.JDialog {
 
         } else {
             
-            Jour jour = jourDao.creatJour(jDateChooser1.getDate());
+            Jour jour = jourDao.creatJour(new java.sql.Date(jDateChooser1.getDate().getTime()));
             Planning planning = new Planning();
             planning.setIdPlanning(jTextFieldId.getText());
             planning.setEmployé((Employé) jComboBoxEmp.getSelectedItem());
@@ -186,10 +186,24 @@ public class JDPlanModif extends javax.swing.JDialog {
             planning.setNbHeures(Integer.parseInt(jTextFieldHeu.getText()));
             
             
-
+             int heur = Integer.parseInt(jTextFieldHeu.getText());
+             
             try {
-                daoPlan.updatePlanning(planning);
-            } catch (DaoException e) {
+                if (daoPlan.verifHeure(planning) == 0) {
+                    daoPlan.insertPlan(planning);
+                  
+                    
+                }
+                 
+                   else if (heur + daoPlan.verifHeure(planning) > 10) {
+
+                        JOptionPane.showMessageDialog(null, "Plus de 10H ! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        daoPlan.updatePlanning(planning);
+                    }
+                
+            
+             } catch (DaoException e) {
                 JOptionPane.showMessageDialog(null, "Modification impossible !", "Avertissement", JOptionPane.ERROR_MESSAGE);
             }
             this.dispose();

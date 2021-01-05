@@ -31,7 +31,7 @@ public class JDEmpModif extends javax.swing.JDialog {
     private VilleDao villeDao = factory.getVilleDao();
 
     public JDEmpModif(java.awt.Frame parent, String titre, Employé employe) {
-        super(parent, titre,true);
+        super(parent, titre, true);
         initComponents();
         fillComponents(employe);
         //getRootPane().setDefaultButton(JButtonOk);
@@ -206,7 +206,11 @@ public class JDEmpModif extends javax.swing.JDialog {
         employe.setVille((Ville) jComboBoxVille.getSelectedItem());
 
         try {
-            employeDao.updateEmploye(employe);
+            if (employeDao.existEmp(employe)) {
+                JOptionPane.showMessageDialog(null, "Insertion impossible Employé existe déjà! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
+            } else {
+                employeDao.updateEmploye(employe);
+            }
         } catch (DaoException e) {
             JOptionPane.showMessageDialog(null, "Insertion impossible ! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
         }
@@ -232,25 +236,25 @@ public class JDEmpModif extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldIDActionPerformed
 
     private void jTextFieldNomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNomKeyTyped
-            char c = evt.getKeyChar();
-            if (!Character.isLetter(c)) {
-                evt.consume();
-        }        
+        char c = evt.getKeyChar();
+        if (!Character.isLetter(c)) {
+            evt.consume();
+        }
 
     }//GEN-LAST:event_jTextFieldNomKeyTyped
 
     private void jTextFieldPrenomKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPrenomKeyTyped
-                   char c = evt.getKeyChar();
-            if (!Character.isLetter(c)) {
-                evt.consume();
-        }  
+        char c = evt.getKeyChar();
+        if (!Character.isLetter(c)) {
+            evt.consume();
+        }
     }//GEN-LAST:event_jTextFieldPrenomKeyTyped
 
     private void jTextFieldAdresseKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldAdresseKeyTyped
-                  char c = evt.getKeyChar();
-            if (!Character.isLetter(c)) {
-                evt.consume();
-        }  
+        char c = evt.getKeyChar();
+        if (!Character.isLetter(c)) {
+            evt.consume();
+        }
     }//GEN-LAST:event_jTextFieldAdresseKeyTyped
 
 
@@ -278,7 +282,6 @@ public class JDEmpModif extends javax.swing.JDialog {
         jTextFieldAdresse.setText(employe.getAdresse());
         jTextFieldEmail.setText(employe.getEmail());
 
-        
         int numVille = employe.getVille().getIdVille();
         ArrayList<Ville> ville = villeDao.selectVilles();
         for (int i = 0; i < ville.size(); i++) {
