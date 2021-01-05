@@ -40,25 +40,25 @@ public class PlanningDaoMysql implements PlanningDao {
             + "JOIN projet ON projet.idProjet = planning.idProjet "
             + "JOIN jour ON planning.idJour = jour.idJour order by 1";
 
-    private static final String SQL_SELECT_PAR_EMP = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune, planning.idPlanning, planning.nbHeures, jour.idJour, jour.date, projet.idProjet, projet.nom "
-            + "FROM ville JOIN employe ON employe.idVille = ville.idVille "
-            + "JOIN planning ON planning.idEmploye = employe.`idEmployé` "
-            + "JOIN projet ON projet.idProjet = planning.idProjet "
-            + "JOIN jour ON planning.idJour = jour.idJour and employe.nom LIKE ? order by 1";
+    private static final String SQL_SELECT_PAR_EMP = " SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune, planning.idPlanning, planning.nbHeures, jour.idJour, jour.date, projet.idProjet, projet.nom "
+            + " FROM ville JOIN employe ON employe.idVille = ville.idVille "
+            + " JOIN planning ON planning.idEmploye = employe.`idEmployé` "
+            + " JOIN projet ON projet.idProjet = planning.idProjet "
+            + " JOIN jour ON planning.idJour = jour.idJour and employe.nom LIKE ? order by 1 ";
 
     private static final String SQL_SELECT_PAR_PRO = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune, planning.idPlanning, planning.nbHeures, jour.idJour, jour.date, projet.idProjet, projet.nom "
-            + "FROM ville JOIN employe ON employe.idVille = ville.idVille "
-            + "JOIN planning ON planning.idEmploye = employe.`idEmployé` "
-            + "JOIN projet ON projet.idProjet = planning.idProjet "
-            + "JOIN jour ON planning.idJour = jour.idJour and projet.`idProjet` = ? order by 1";
+            + " FROM ville JOIN employe ON employe.idVille = ville.idVille "
+            + " JOIN planning ON planning.idEmploye = employe.`idEmployé` "
+            + " JOIN projet ON projet.idProjet = planning.idProjet "
+            + " JOIN jour ON planning.idJour = jour.idJour and projet.`idProjet` = ? order by 1";
 
     private static final String SQL_INSERT = "INSERT into planning ( idEmploye,idProjet, idJour,nbHeures) values (?, ?, ?, ?)";
 
     private static final String SQL_DELETE = "delete from planning where idPlanning = ?";
 
-    private static final String SQL_UPDATE = "Update planning set idEmploye = ?, idProjet = ?, idJour = ?, nbHeures = ? where idPlanning = ?";
+    private static final String SQL_UPDATE = "Update planning set idEmploye = ?, idProjet = ?, idJour = ?, nbHeures = ? WHERE idPlanning = ?";
 
-    private static final String SQL_DATE = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune, planning.idPlanning, planning.nbHeures, jour.idJour, jour.date, projet.idProjet, projet.nom FROM ville JOIN employe ON employe.idVille = ville.idVille JOIN planning ON planning.idEmploye = employe.`idEmployé` JOIN projet ON projet.idProjet = planning.idProjet JOIN jour ON planning.idJour = jour.idJour WHERE jour.date BETWEEN ? AND ? GROUP BY 1";
+    private static final String SQL_DATE = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune, planning.idPlanning, planning.nbHeures, jour.idJour, jour.date, projet.idProjet, projet.nom FROM ville JOIN employe ON employe.idVille = ville.idVille JOIN planning ON planning.idEmploye = employe.`idEmployé` JOIN projet ON projet.idProjet = planning.idProjet JOIN jour ON planning.idJour = jour.idJour WHERE jour.date >= ? AND jour.date <= ? ";
 
     private static final String SQL_VERIF = "SELECT employe.idEmployé, employe.nom,employe.prenom, employe.adresse, employe.email, employe.idVille,ville.idVille, ville.cp, ville.commune, planning.idPlanning, planning.nbHeures, jour.idJour, jour.date, projet.idProjet, projet.nom FROM ville JOIN employe ON employe.idVille = ville.idVille JOIN planning ON planning.idEmploye = employe.`idEmployé` JOIN projet ON projet.idProjet = planning.idProjet JOIN jour ON planning.idJour = jour.idJour WHERE planning.nbHeures<=10 GROUP BY 1";
     

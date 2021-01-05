@@ -18,6 +18,10 @@ public class Jour {
         this.date = date;
     }
 
+    public Jour() {
+    }
+    
+
     public int getIdJour() {
         return idJour;
     }

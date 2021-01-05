@@ -23,23 +23,30 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="employé" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="heure" min="-2" max="-2" attributes="0"/>
-                  <Component id="jour" min="-2" max="-2" attributes="0"/>
                   <Component id="projet" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="106" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jButtonAnnuler" max="32767" attributes="0"/>
-                  <Component id="JComboBoxEmp" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxproj" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxJour" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextFieldnbH" alignment="0" max="32767" attributes="0"/>
+              <EmptySpace pref="96" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jButtonAnnuler" min="-2" max="-2" attributes="0"/>
+                          <Component id="JComboBoxEmp" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxproj" min="-2" max="-2" attributes="0"/>
+                          <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jTextFieldnbH" min="-2" pref="77" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
@@ -63,17 +70,17 @@
                   <Component id="projet" min="-2" max="-2" attributes="0"/>
                   <Component id="jComboBoxproj" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jour" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxJour" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="heure" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldnbH" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="66" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jDateChooser1" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="40" max="32767" attributes="0"/>
               <Component id="jButtonAnnuler" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
           </Group>
@@ -98,11 +105,6 @@
         <Property name="text" type="java.lang.String" value="projet:&#xa;"/>
       </Properties>
     </Component>
-    <Component class="java.awt.Label" name="jour">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jour:&#xa;&#xa;"/>
-      </Properties>
-    </Component>
     <Component class="java.awt.Label" name="heure">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombre d&apos;Heure"/>
@@ -117,16 +119,6 @@
       </AuxValues>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBoxproj">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBoxJour">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-      </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
       </AuxValues>
@@ -151,6 +143,13 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonOKActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Date"/>
+      </Properties>
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
     </Component>
   </SubComponents>
 </Form>

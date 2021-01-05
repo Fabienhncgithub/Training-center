@@ -51,7 +51,6 @@ public class JDPlanModif extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButtonOk = new javax.swing.JButton();
         jButtonAnnuler = new javax.swing.JButton();
@@ -59,15 +58,14 @@ public class JDPlanModif extends javax.swing.JDialog {
         jComboBoxEmp = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         jComboBoxPro = new javax.swing.JComboBox();
-        jComboBoxJou = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldId = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("projet: ");
-
-        jLabel2.setText("jour:");
 
         jLabel3.setText("Nombre d'Heure:");
 
@@ -99,38 +97,40 @@ public class JDPlanModif extends javax.swing.JDialog {
         jTextFieldId.setText("\n");
         jTextFieldId.setEnabled(false);
 
+        jLabel6.setText("Date");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonOk)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel4)
-                        .addComponent(jLabel5)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-                        .addComponent(jButtonAnnuler)
-                        .addGap(87, 87, 87))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBoxPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBoxEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBoxJou, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldHeu, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jButtonOk)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldHeu, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jButtonAnnuler)))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,19 +147,21 @@ public class JDPlanModif extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jComboBoxPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBoxJou, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFieldHeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextFieldHeu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonOk)
                     .addComponent(jButtonAnnuler))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -174,13 +176,16 @@ public class JDPlanModif extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "pas plus de 10H par jour ! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
 
         } else {
-
+            
+            Jour jour = jourDao.creatJour(jDateChooser1.getDate());
             Planning planning = new Planning();
             planning.setIdPlanning(jTextFieldId.getText());
             planning.setEmployé((Employé) jComboBoxEmp.getSelectedItem());
             planning.setProjet((Projet) jComboBoxPro.getSelectedItem());
-            planning.setJour((Jour) jComboBoxJou.getSelectedItem());
+            planning.setJour(jour);
             planning.setNbHeures(Integer.parseInt(jTextFieldHeu.getText()));
+            
+            
 
             try {
                 daoPlan.updatePlanning(planning);
@@ -203,13 +208,13 @@ public class JDPlanModif extends javax.swing.JDialog {
     private javax.swing.JButton jButtonAnnuler;
     private javax.swing.JButton jButtonOk;
     private javax.swing.JComboBox jComboBoxEmp;
-    private javax.swing.JComboBox jComboBoxJou;
     private javax.swing.JComboBox jComboBoxPro;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField jTextFieldHeu;
     private javax.swing.JTextField jTextFieldId;
     // End of variables declaration//GEN-END:variables
@@ -219,6 +224,7 @@ public class JDPlanModif extends javax.swing.JDialog {
 
         jTextFieldId.setText(plan.getIdPlanning());
         jTextFieldHeu.setText(String.valueOf(plan.getNbHeures()));
+        jDateChooser1.setDate(plan.getJour().getDate());
 
         int numEmp = plan.getEmployé().getIdEmployé();
         ArrayList<Employé> emp = employeDao.selectEmployes();
@@ -237,15 +243,13 @@ public class JDPlanModif extends javax.swing.JDialog {
                 jComboBoxPro.setSelectedIndex(i);
             }
         }
-
-        int numJour = plan.getJour().getIdJour();
-        ArrayList<Jour> jour = jourDao.selectJours();
-        for (int i = 0; i < jour.size(); i++) {
-            jComboBoxJou.addItem(jour.get(i));
-            if (jour.get(i).getIdJour() == numJour) {
-                jComboBoxJou.setSelectedIndex(i);
-            }
-
-        }
+//
+//        int numJour = plan.getJour().getIdJour();
+//        ArrayList<Jour> jour = jourDao.selectJours();
+//        for (int i = 0; i < jour.size(); i++) {
+//            jComboBoxJou.addItem(jour.get(i));
+//            if (jour.get(i).getIdJour() == numJour) {
+//                jComboBoxJou.setSelectedIndex(i);
     }
+
 }

@@ -16,6 +16,7 @@ import dao.JourDao;
 import dao.PlanningDao;
 import dao.ProjetDao;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,22 +24,22 @@ import javax.swing.JOptionPane;
  * @author Fabien
  */
 public class JDPlanInsert extends javax.swing.JDialog {
-    
+
     private DaoFactory factory = DaoFactory.getInstance();
     private PlanningDao daoPlan = factory.getPlanningDao();
     private EmployeDao employeDao = factory.getEmployeDao();
     private ProjetDao projetDao = factory.getProjetDao();
     private JourDao jourDao = factory.getJourDao();
-    
+
     private TableModelPlanning myPlanModel = new TableModelPlanning(daoPlan.selectPlanning());
-    
+
     public JDPlanInsert(java.awt.Frame parent, String titre) {
         super(parent, titre, true);
         initComponents();
         fillComponents();
         //getRootPane().setDefaultButton(JButtonOk);
         setVisible(true);
-        
+
     }
 
     /**
@@ -52,22 +53,20 @@ public class JDPlanInsert extends javax.swing.JDialog {
 
         employé = new java.awt.Label();
         projet = new java.awt.Label();
-        jour = new java.awt.Label();
         heure = new java.awt.Label();
         JComboBoxEmp = new javax.swing.JComboBox();
         jComboBoxproj = new javax.swing.JComboBox();
-        jComboBoxJour = new javax.swing.JComboBox();
         jTextFieldnbH = new javax.swing.JTextField();
         jButtonAnnuler = new javax.swing.JButton();
         jButtonOK = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         employé.setText("employé:");
 
         projet.setText("projet:\n");
-
-        jour.setText("jour:\n\n");
 
         heure.setText("Nombre d'Heure");
 
@@ -97,25 +96,31 @@ public class JDPlanInsert extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setText("Date");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(employé, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(heure, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(projet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonAnnuler, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JComboBoxEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxproj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxJour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldnbH))
-                .addGap(67, 67, 67))
+                    .addComponent(projet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonAnnuler)
+                            .addComponent(JComboBoxEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxproj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(57, 57, 57))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jTextFieldnbH, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(65, 65, 65)
@@ -133,15 +138,15 @@ public class JDPlanInsert extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(projet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxproj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxJour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(heure, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldnbH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jButtonAnnuler)
                 .addGap(34, 34, 34))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,23 +164,26 @@ public class JDPlanInsert extends javax.swing.JDialog {
     }//GEN-LAST:event_JComboBoxEmpActionPerformed
 
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
-        if(Integer.parseInt(jTextFieldnbH.getText())>=10){
-         JOptionPane.showMessageDialog(null, "pas plus de 10H par jour ! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
-        
-        }else{
-        Planning planning = new Planning();
-        planning.setEmployé((Employé) JComboBoxEmp.getSelectedItem());
-        planning.setProjet((Projet) jComboBoxproj.getSelectedItem());
-        planning.setJour((Jour) jComboBoxJour.getSelectedItem());
-        planning.setNbHeures(Integer.parseInt(jTextFieldnbH.getText()));
-        
-        try {
-            daoPlan.insertPlan(planning);
-        } catch (DaoException e) {
-            JOptionPane.showMessageDialog(null, "Insertion impossible ! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
-        }
-        
-        this.dispose();
+        if (Integer.parseInt(jTextFieldnbH.getText()) >= 10) {
+            JOptionPane.showMessageDialog(null, "pas plus de 10H par jour ! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            Jour jour = jourDao.creatJour(jDateChooser1.getDate());
+            
+            Planning planning = new Planning();
+            planning.setEmployé((Employé) JComboBoxEmp.getSelectedItem());
+            planning.setProjet((Projet) jComboBoxproj.getSelectedItem());
+          //  planning.setJour((Jour) jComboBoxJour.getSelectedItem());
+            planning.setNbHeures(Integer.parseInt(jTextFieldnbH.getText()));
+            planning.setJour(jour);
+
+            try {
+                daoPlan.insertPlan(planning);
+            } catch (DaoException e) {
+                JOptionPane.showMessageDialog(null, "Insertion impossible ! ", "Avertissement", JOptionPane.ERROR_MESSAGE);
+            }
+
+            this.dispose();
         }
     }//GEN-LAST:event_jButtonOKActionPerformed
 
@@ -187,9 +195,9 @@ public class JDPlanInsert extends javax.swing.JDialog {
         char c = evt.getKeyChar();
         if (!Character.isDigit(c)) {
             evt.consume();
-        }        
+        }
     }//GEN-LAST:event_jTextFieldnbHKeyTyped
-    
+
     private void fillComponents() {
 
         /* charger toutes les catégories */
@@ -197,17 +205,17 @@ public class JDPlanInsert extends javax.swing.JDialog {
         for (int i = 0; i < emp.size(); i++) {
             JComboBoxEmp.addItem(emp.get(i));
         }
-        
+
         ArrayList<Projet> pro = projetDao.selectProjets();
         for (int i = 0; i < pro.size(); i++) {
             jComboBoxproj.addItem(pro.get(i));
         }
-        
-        ArrayList<Jour> jour = jourDao.selectJours();
-        for (int i = 0; i < jour.size(); i++) {
-            jComboBoxJour.addItem(jour.get(i));
-        }
-        
+
+//        ArrayList<Jour> jour = jourDao.selectJours();
+//        for (int i = 0; i < jour.size(); i++) {
+//            jComboBoxJour.addItem(jour.get(i));
+//        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -216,10 +224,10 @@ public class JDPlanInsert extends javax.swing.JDialog {
     private java.awt.Label heure;
     private javax.swing.JButton jButtonAnnuler;
     private javax.swing.JButton jButtonOK;
-    private javax.swing.JComboBox jComboBoxJour;
     private javax.swing.JComboBox jComboBoxproj;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextFieldnbH;
-    private java.awt.Label jour;
     private java.awt.Label projet;
     // End of variables declaration//GEN-END:variables
 }

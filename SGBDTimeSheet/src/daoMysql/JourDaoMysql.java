@@ -15,27 +15,29 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
  * @author Fabien
  */
-public class JourDaoMysql implements JourDao{
+public class JourDaoMysql implements JourDao {
 
-    
-       private DaoFactory daoFactory;
+    private DaoFactory daoFactory;
 
     public JourDaoMysql(DaoFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
-    
-    
+
     private static final String SQL_SELECT_TOUS = "SELECT jour.idJour, jour.date FROM jour ";
-    
-    
+
+    private static final String SQL_INSERT_JOUR = "INSERT INTO jour (date) VALUE (?) ";
+
+    private static final String SQL_RECUP_JOUR = " SELECT jour.idJour, jour.date FROM jour where jour.idJour = ? ";
+
     @Override
     public ArrayList<Jour> selectJours() throws DaoException {
-            Connection conn = null;
+        Connection conn = null;
         PreparedStatement prepStat = null;
         ResultSet resu = null;
 
@@ -53,7 +55,37 @@ public class JourDaoMysql implements JourDao{
         } finally {
             DaoUtil.fermeturesSilencieuses(prepStat, conn);
         }
-        return myList; 
+        return myList;
     }
-    
+
+    @Override
+    public Jour creatJour(Date date) {
+        Connection conn = null;
+        PreparedStatement prepStat = null;
+        ResultSet resu = null;
+
+        Jour j = new Jour();
+
+        try {
+            conn = daoFactory.getConnection();
+            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_INSERT_JOUR, true, new java.sql.Date(date.getTime()));
+            prepStat.executeUpdate();
+            resu = prepStat.getGeneratedKeys();
+            resu.next();
+            int idJour = resu.getInt(1);
+
+            prepStat = DaoUtil.initialisationRequetePreparee(conn, SQL_RECUP_JOUR,false, idJour);
+            resu = prepStat.executeQuery();
+
+            if (resu.next()) {
+                j = new Jour(resu.getInt(1), resu.getDate(2));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            DaoUtil.fermeturesSilencieuses(prepStat, conn);
+        }
+        return j;
+    }
+
 }

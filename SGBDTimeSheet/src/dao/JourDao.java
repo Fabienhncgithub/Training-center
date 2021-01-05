@@ -7,6 +7,7 @@ package dao;
 
 import bean.Jour;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -14,4 +15,6 @@ import java.util.ArrayList;
  */
 public interface JourDao {
       public  ArrayList<Jour> selectJours() throws DaoException;
+
+    public Jour creatJour(Date date);
 }

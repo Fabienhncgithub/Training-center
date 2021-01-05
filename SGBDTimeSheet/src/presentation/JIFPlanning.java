@@ -35,7 +35,7 @@ public class JIFPlanning extends javax.swing.JInternalFrame {
     private EmployeDao employeDao = factory.getEmployeDao();
     private ProjetDao projetDao = factory.getProjetDao();
     private TableModelPlanning myPlanModel = new TableModelPlanning(daoPlan.selectPlanning());
-    // private String search = "";
+    private String search2 = "";
 
     public JIFPlanning() {
         initComponents();
@@ -257,11 +257,17 @@ public class JIFPlanning extends javax.swing.JInternalFrame {
             }
         }
         
+        
+        
+        
         String search = String.valueOf(evt.getKeyChar()).trim();
+         search2+=search;
         if (search.isEmpty()) {
             myPlanModel.setMyList(daoPlan.selectPlanningParEmp(search));
+            search2 ="";
         } else {
-            ArrayList<Planning> listePlannings = daoPlan.selectPlanningParEmp(search);
+          
+            ArrayList<Planning> listePlannings = daoPlan.selectPlanningParEmp(search2);
             search = jTextSearch.getText();
             myPlanModel.setMyList(listePlannings);
         }
